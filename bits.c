@@ -241,5 +241,7 @@ int rotateRight(int x, int n) {
  *   Rating: 3
  */
 int isNonNegative(int x) {
-  return 2;
+/* whaddup, whaddup, I'm gonna go ahead and shift all the stuff to the right by 31 so that the signed bit is moved to the least significant bit's place and the number is padded by the signed bit. I'll then take that num and return 1 if all the bits are 0 (number was positive) and 0. */
+	int el_numero = x >> 31;
+  return !el_numero;
 }
