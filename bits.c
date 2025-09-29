@@ -206,10 +206,9 @@ int tmax(void) {
  *   Rating: 2
  */
 int isNotEqual(int x, int y) {
-  /* use of the XOR ^ operator returns 0 if x and y are equal, and returns 1 if they differ in any combo
-   * I'm having trouble implementing the logic correctly. ill reattempt to find a solution to this tomorrow.
-   */ 
-	return (x ^ y);
+  /* use of the XOR bitwise  ^ operator returns 0 if x and y are equal, and returns 1 if they differ in any combo
+   * use of the ! logical operator ensures we get an output of 0 or 1. I used them twice to double-negate, so we only get the use of getting a 0 or 1 result without actually getting a negated answer*/ 
+	return !(!(x ^ y));
 }
 /* 
  * copyLSB - set all bits of result to least significant bit of x
@@ -219,7 +218,9 @@ int isNotEqual(int x, int y) {
  *   Rating: 2
  */
 int copyLSB(int x) {
-  return 2;
+ 	 
+	int storedLSB = x << 31;
+	return storedLSB;
 }
 /* 
  * rotateRight - Rotate x to the right by n
