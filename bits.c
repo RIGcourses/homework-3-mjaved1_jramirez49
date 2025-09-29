@@ -196,7 +196,8 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmax(void) {
-  return ~ (1 << 31);
+/* We used the smallest possible number that can be represented (1), though any odd number would probably work, to represent 000...1, where the least significant bit is 1. Then, we shifted that 1, to the left by 31 bits so that the new value is 1......0, which represents the smallest possible NEGATIVE  value that can be represented in two's complement notation. We then inverted that to get the biggest possible two's complement value, being 0111....1.*/
+      	return ~ (1 << 31);
 }
 /* 
  * isNotEqual - return 0 if x == y, and 1 otherwise 
