@@ -218,9 +218,9 @@ int isNotEqual(int x, int y) {
  *   Rating: 2
  */
 int copyLSB(int x) {
- 	 
-	int storedLSB = x << 31;
-	return storedLSB;
+ /*   defined a new int variable, storedLSB, which stored the least significant bit of x, padded by 31 zeros on the right. Then, we arithmetically shifted storedLSB to the right by 31 bits, which effectively copied the LSB of x, into our storedLSB variable */	 
+	int storedLSB = (x << 31);
+	return (storedLSB >> 31);
 }
 /* 
  * rotateRight - Rotate x to the right by n
@@ -231,7 +231,7 @@ int copyLSB(int x) {
  *   Rating: 3 
  */
 int rotateRight(int x, int n) {
-  return 2;
+  return ;
 }
 /* 
  * isNonNegative - return 1 if x >= 0, return 0 otherwise 
