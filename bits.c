@@ -1,8 +1,9 @@
 /* 
  * CS:APP Data Lab 
  * 
- * <Muhammad Javed - mjaved1>
- * 
+ * <Muhammad Javed - mjaved1@luc.edu>
+ * <Jose Ramirez - jramirez49@luc.edu>
+ *
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
  *
@@ -205,7 +206,10 @@ int tmax(void) {
  *   Rating: 2
  */
 int isNotEqual(int x, int y) {
-  return 2;
+  /* use of the XOR ^ operator returns 0 if x and y are equal, and returns 1 if they differ in any combo
+   * I'm having trouble implementing the logic correctly. ill reattempt to find a solution to this tomorrow.
+   */ 
+	return (x ^ y);
 }
 /* 
  * copyLSB - set all bits of result to least significant bit of x
