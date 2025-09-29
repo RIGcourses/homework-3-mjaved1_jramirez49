@@ -206,8 +206,7 @@ int tmax(void) {
  *   Rating: 2
  */
 int isNotEqual(int x, int y) {
-  /* use of the XOR bitwise  ^ operator returns 0 if x and y are equal, and returns 1 if they differ in any combo
-   * use of the ! logical operator ensures we get an output of 0 or 1. I used them twice to double-negate, so we only get the use of getting a 0 or 1 result without actually getting a negated answer*/ 
+  /* use of the XOR bitwise ^ operator returns a series of bits. If the x and y variables are equal, the output bit sequence  will be all 0 after being XOR'd since all the bit values will match. If the two variables are not equal, there'll be atleast a single 1 somewhere in the sequence of bits that's outputted. The use of the ! logical operator ensures we get an output of 0 or 1 instead of a series of bits. I used ! operator twice to double-negate. The first ! serves to convert the output from a series of bits, to either 0 or 1, which will be the opposite of what we're looking for due to the negation operation, Which is reverted back to our intended output after using a second negation*/ 
 	return !(!(x ^ y));
 }
 /* 
