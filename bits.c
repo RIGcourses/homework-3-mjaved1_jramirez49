@@ -1,7 +1,7 @@
 /* 
  * CS:APP Data Lab 
  * 
- * <Please put your name and userid here>
+ * <Muhammad Javed - mjaved1>
  * 
  * bits.c - Source file with your solutions to the Lab.
  *          This is the file you will hand in to your instructor.
@@ -174,7 +174,8 @@ NOTES:
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-  return 2;
+/* the normal nor is ~(x | y) and with demorgan's law, you can convert that to ~x&~y (which is what i did)*/
+  return (~x & ~y);
 }
 /* 
  * bitXor - x^y using only ~ and & 
@@ -184,7 +185,8 @@ int bitNor(int x, int y) {
  *   Rating: 1
  */
 int bitXor(int x, int y) {
-  return 2;
+/* gonna use ~ and & operators to Xor these two nums yo I did a truth table and what not it's a lot to explain but i will if you ask*/
+	return ~(~(x & ~y) & ~(~x & y));
 }
 /* 
  * TMax - return maximum two's complement integer 
