@@ -196,7 +196,7 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmax(void) {
-  return 2;
+  return ~ (1 << 31);
 }
 /* 
  * isNotEqual - return 0 if x == y, and 1 otherwise 
