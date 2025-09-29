@@ -230,7 +230,22 @@ int copyLSB(int x) {
  *   Rating: 3 
  */
 int rotateRight(int x, int n) {
-  return ;
+/* 1 - shift 1 left by degree of rotation eg, n = 3 -> 00000000000000000000000000001000
+ * 2 - add ~0 (to simulate subtracting 1, since the '-' was not allowed) which changes every bit after the only 'on' bit to '1' i.e., 000...1000 -> 0000...1111
+ * 3 - create 'right_chunk' by AND-ing 'x' and the mask. oh how does that work? lemme explain:
+ *     000000...1 and x is a sequence of 32 bits yes? soooo, if you and anything with 0, you get zero so we don't have to worry about the bits that are '0' in the mask.
+ *     now, for the second portion (that has the 1111) will preserve whatever x had for those bits i.e., 0 AND 1 = 0; 1 AND 1 = 1 (so the bits are preserved)
+ * 4 - so we take that chunk we just made (that is all zeros before the portion we want to rotate) and shift that LEFT by the inverse of 'n'. this will create right_chunk0000000..
+ * 5 - so we got the part that we want to tack on to the left side of the number
+ * 6 - NOW, we take x shifted left by n and AND it with the complement of the mask shifted left by the inverse of n. This moves the mask to the left and ANDs it with x shifted by n which gives us the right portion that we have to attach to the 'shifted_right_chunk'
+ * 7 - we did that and that is le answer
+ * 8 - this was nuts; cannot believe we were expected to figure this out by ourselves? Shoutout Nathan Johnson in the tutoring center because we defineitely couldn't have done it without him <3 */
+	int mask = (1 << n) + ~0;
+	int right_chunk = x & mask;
+	int shifted_right_chunk = right_chunk << (~n + 33);
+	int shifted = (x >> n) & ~(mask << (~n + 33));
+	int answer = shifted_right_chunk | shifted;
+	return answer;
 }
 /* 
  * isNonNegative - return 1 if x >= 0, return 0 otherwise 
@@ -240,7 +255,7 @@ int rotateRight(int x, int n) {
  *   Rating: 3
  */
 int isNonNegative(int x) {
-/* whaddup, whaddup, I'm gonna go ahead and shift all the stuff to the right by 31 so that the signed bit is moved to the least significant bit's place and the number is padded by the signed bit. I'll then take that num and return 1 if all the bits are 0 (number was positive) and 0. */
+/* whaddup, whaddup, I'm gonna go ahead and shift all the stuff to the right by 31 so that the signed bit is moved to the least significant bit's place and the number is padded by the signed bit. I'll then take that num and return 1 if all the bits are 0 (number was positive) or 0. */
 	int el_numero = x >> 31;
   return !el_numero;
 }
