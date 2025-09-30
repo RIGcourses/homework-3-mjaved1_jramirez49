@@ -196,7 +196,7 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmax(void) {
-/* We used the smallest possible number that can be represented (1), though any odd number would probably work, to represent 000...1, where the least significant bit is 1. Then, we shifted that 1, to the left by 31 bits so that the new value is 1......0, which represents the smallest possible NEGATIVE  value that can be represented in two's complement notation. We then inverted that to get the biggest possible two's complement value, being 0111....1.*/
+/* We used the smallest positive number that can be represented in two's complement signed notation, 1, to represent 000...1. Where the least significant bit (LSB) is 1. Then, we shifted the LSB to the left by 31 bits, so that the new value is 1......0, which represents the largest NEGATIVE value that can be represented in two's complement signed notation. We then inverted that to return the maximum two's complement integer value, being 0111....1, where all bits are in the 'on' state, while the sign bit = 0, which is positive.*/
       	return ~ (1 << 31);
 }
 /* 
@@ -207,7 +207,7 @@ int tmax(void) {
  *   Rating: 2
  */
 int isNotEqual(int x, int y) {
-  /* use of the XOR bitwise ^ operator returns a series of bits. If the x and y variables are equal, the output bit sequence  will be all 0 after being XOR'd since all the bit values will match. If the two variables are not equal, there'll be atleast a single 1 somewhere in the sequence of bits that's outputted. The use of the ! logical operator ensures we get an output of 0 or 1 instead of a series of bits. I used ! operator twice to double-negate. The first ! serves to convert the output from a series of bits, to either 0 or 1, which will be the opposite of what we're looking for due to the negation operation, Which is reverted back to our intended output after using a second negation*/ 
+  /* use of the XOR bitwise ^ operator returns a series of bits. If the x and y variables are equal, the output bit sequence will be all 0s, after being XOR'd since all the bit values in both variables will match. IF, the two variables are not equal, there'll be ATLEAST a single 1 somewhere in the sequence of bits after the XOR operation. The use of the '!' logical operator ensures we get an output of 0 or 1, rather than a series of bits. Here, we used the '!' operator twice to double-negate. The first ! serves primarily to convert the output from a series of bits, to either 0 or 1. The output would be the opposite of what we're looking for, due to the negation operation. The use of the second '!' operator is intended to revert the output back to our intended output, by negating it once again after.*/ 
 	return !(!(x ^ y));
 }
 /* 
@@ -218,7 +218,7 @@ int isNotEqual(int x, int y) {
  *   Rating: 2
  */
 int copyLSB(int x) {
- /*   defined a new int variable, storedLSB, which stored the least significant bit of x, padded by 31 zeros on the right. Then, we arithmetically shifted storedLSB to the right by 31 bits, which effectively copied the LSB of x, into our storedLSB variable */	 
+ /*   defined a new int variable, storedLSB, which stored the least significant bit of x in the sign bit position, by shifting x left by 31 bits, with the output being 1000...0, where 1 represents the LSB of x, padded by 31 zeros on the right. Then, we arithmetically shifted storedLSB variable to the right by 31 bits, which returns all bits of the result, set to the LSB of x.*/	 
 	int storedLSB = (x << 31);
 	return (storedLSB >> 31);
 }
@@ -234,13 +234,11 @@ int rotateRight(int x, int n) {
 /* 1 - shift 1 left by degree of rotation eg, n = 3 -> 00000000000000000000000000001000
  * 2 - add ~0 (to simulate subtracting 1, since the '-' was not allowed) which changes every bit after the only 'on' bit to '1' i.e., 000...1000 -> 0000...1111
  * 3 - create 'right_chunk' by AND-ing 'x' and the mask. oh how does that work? lemme explain:
- *     000000...1 and x is a sequence of 32 bits yes? soooo, if you and anything with 0, you get zero so we don't have to worry about the bits that are '0' in the mask.
- *     now, for the second portion (that has the 1111) will preserve whatever x had for those bits i.e., 0 AND 1 = 0; 1 AND 1 = 1 (so the bits are preserved)
+ *     000000...1 and x is a sequence of 32 bits yes? soooo, if you AND '&' anything with 0, you get zero so we don't have to worry about the bits that are '0' in the mask. now, the second portion (that has the 1111) will preserve whatever x had for those bits i.e., 0 AND 1 = 0; 1 AND 1 = 1 (so the bits are preserved).
  * 4 - so we take that chunk we just made (that is all zeros before the portion we want to rotate) and shift that LEFT by the inverse of 'n'. this will create right_chunk0000000..
  * 5 - so we got the part that we want to tack on to the left side of the number
- * 6 - NOW, we take x shifted left by n and AND it with the complement of the mask shifted left by the inverse of n. This moves the mask to the left and ANDs it with x shifted by n which gives us the right portion that we have to attach to the 'shifted_right_chunk'
- * 7 - we did that and that is le answer
- * 8 - this was nuts; cannot believe we were expected to figure this out by ourselves? Shoutout Nathan Johnson in the tutoring center because we defineitely couldn't have done it without him <3 */
+ * 6 - NOW, we take x shifted left by n, and AND '&' it with the complement of the mask shifted left by the inverse of n. This moves the mask to the left and ANDs it with x shifted by n which gives us the right portion that we have to attach to the 'shifted_right_chunk'
+ * 7 - Shoutout Nathan Johnson in the tutoring center because we couldn't have done it without him. */
 	int mask = (1 << n) + ~0;
 	int right_chunk = x & mask;
 	int shifted_right_chunk = right_chunk << (~n + 33);
@@ -256,7 +254,7 @@ int rotateRight(int x, int n) {
  *   Rating: 3
  */
 int isNonNegative(int x) {
-/* whaddup, whaddup, I'm gonna go ahead and shift all the stuff to the right by 31 so that the signed bit is moved to the least significant bit's place and the number is padded by the signed bit. I'll then take that num and return 1 if all the bits are 0 (number was positive) or 0. */
+/* I'm gonna go ahead and shift all the stuff to the right by 31 so that the signed bit is moved to the least significant bit's place and the number is padded by the signed bit. I'll then take that num and return 1 if all the bits are 0 (number was positive) or 0. */
 	int el_numero = x >> 31;
   return !el_numero;
 }
